@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
 		m_Rigidbody = GetComponent<Rigidbody>();
 
 		// Find transforms
-		m_Mesh = transform.FindChild("Mesh");
+		m_Mesh = transform.Find("Mesh");
 
 		// Hide and lock the cursor (to the center of the screen)
 		Cursor.lockState = CursorLockMode.Locked;
@@ -176,29 +176,6 @@ public class Player : MonoBehaviour
 		if (!IsAlive()) // Skip updating the movement if the player is dead
 			return;
 
-		// Movement, naive implementation
-		/*
-		if (Input.GetKey(KeyCode.W)) // Forward
-			transform.position += transform.forward * m_MovementSpeed * Time.deltaTime;
-		if (Input.GetKey(KeyCode.S)) // Backward
-			transform.position += -transform.forward * m_MovementSpeed * Time.deltaTime;
-		if (Input.GetKey(KeyCode.D)) // Right
-			transform.position += transform.right * m_MovementSpeed * Time.deltaTime;
-		if (Input.GetKey(KeyCode.A)) // Left
-			transform.position += -transform.right * m_MovementSpeed * Time.deltaTime;
-		*/	
-
-		// Move the player, constant speed
-		/*
-		transform.position += m_InputVec * m_MovementSpeed * Time.deltaTime;
-		*/
-
-		// Move the player, acceleration
-		/*
-		m_CurrentInputVec = Vector3.Lerp(m_CurrentInputVec, m_InputVec, m_Acceleration * Time.deltaTime);
-		transform.position += m_CurrentInputVec * m_MovementSpeed * Time.deltaTime;
-		*/
-
 		// Move the player by pushing the rigidbody (XZ only)
 
 		// Smooth (lerp) the input vector, giving us some acceleration/deceleration
@@ -264,7 +241,7 @@ public class Player : MonoBehaviour
 		// Play muzzle flash particle system
 		m_MuzzleParticle.GetComponent<ParticleSystem>().Play();
 
-		// To see where we might have hit something, we are going to preform a physics raycast
+		// To see where we might have hit something, we are going to perform a physics raycast
 		// This shoots a ray into the physics world, and the physics engine is then able to tell us what we hit and where we hit it (if we hit anything at all)
 
 		// Build a ray going from the camera position straight forward (unless told otherwise, the physics engine will shoot the ray infinitely far)
